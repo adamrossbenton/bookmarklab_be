@@ -1,23 +1,21 @@
 ////////////////////////////////////////////////
+// Dependencies
+////////////////////////////////////////////////
 require("dotenv").config()
 const express = require("express")
-const mongoose = require("mongoose")
+const cors = require("cors")
+const morgan = require("morgan")
+const Bookmark = require("./models/bookmark")
 
-const {PORT, DB_URL} = process.env;
+const {PORT} = process.env;
 const app = express()
 
 ////////////////////////////////////////////////
-// DB
+// Middleware
 ////////////////////////////////////////////////
-mongoose.connect(DB_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-})
-
-mongoose.connection
-    .on("open", () => console.log("Connected to DB"))
-    .on("open", () => console.log("Disconnected from DB"))
-    .on("error", (err) => console.log(err))
+app.use(cors())
+app.use(morgan("dev"))
+app.use(express.json())
 
 ////////////////////////////////////////////////
 // Routes
@@ -26,6 +24,46 @@ mongoose.connection
 // Test
 app.get("/", (req,res) => {
     res.send("hello bookmark")
+})
+
+// Index
+app.get("/bookmarks", async (req,res) => {
+    try {
+        res.json(await Bookmark.find({}))
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+// Destroy
+app.delete("/bookmarks/:id", async (req,res) => {
+    try {
+        res.json(await Bookmark.findByIdAndRemove(req.params.id))
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+// Update
+app.put("/bookmarks/:id", async (req,res) => {
+    try {
+        res.json(await Bookmark.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new: true}
+        ))
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+// Create
+app.post("/bookmarks", async (req,res) => {
+    try {
+        res.json(await Bookmark.create(req.body))
+    } catch (err) {
+        res.status(400).json(err)
+    }
 })
 
 ////////////////////////////////////////////////
