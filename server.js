@@ -30,7 +30,20 @@ app.get("/", (req,res) => {
 app.get("/bookmarks", async (req,res) => {
     try {
         res.json(await Bookmark.find({}))
-    } catch (error) {
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
+// Update
+app.put("/bookmarks/:id", async (req,res) => {
+    try {
+        res.json(await Bookmark.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new: true}
+        ))
+    } catch (err) {
         res.status(400).json(err)
     }
 })
