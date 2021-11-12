@@ -15,6 +15,11 @@ app.get("/", (req,res) => {
     res.send("hello bookmark")
 })
 
+// Index
+app.get("/bookmarks", (req,res) => {
+    res.send("Bookmark Index")
+})
+
 ////////////////////////////////////////////////
 // Listener
 ////////////////////////////////////////////////
