@@ -1,10 +1,21 @@
 ////////////////////////////////////////////////
+// Dependencies
+////////////////////////////////////////////////
 require("dotenv").config()
 const express = require("express")
+const cors = require("cors")
+const morgan = require("morgan")
 const Bookmark = require("./models/bookmark")
 
 const {PORT} = process.env;
 const app = express()
+
+////////////////////////////////////////////////
+// Middleware
+////////////////////////////////////////////////
+app.use(cors())
+app.use(morgan("dev"))
+app.use(express.json())
 
 ////////////////////////////////////////////////
 // Routes
@@ -20,7 +31,16 @@ app.get("/bookmarks", async (req,res) => {
     try {
         res.json(await Bookmark.find({}))
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json(err)
+    }
+})
+
+// Create
+app.post("/bookmarks", async (req,res) => {
+    try {
+        res.json(await Bookmark.create(req.body))
+    } catch (err) {
+        res.status(400).json(err)
     }
 })
 
