@@ -35,6 +35,15 @@ app.get("/bookmarks", async (req,res) => {
     }
 })
 
+// Destroy
+app.delete("/bookmarks/:id", async (req,res) => {
+    try {
+        res.json(await Bookmark.findByIdAndRemove(req.params.id))
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
 // Update
 app.put("/bookmarks/:id", async (req,res) => {
     try {
