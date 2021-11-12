@@ -43,6 +43,15 @@ const startBookmarks = [
         url: "https://www.reddit.com/",
         slogan: "The Front Page of the Internet",
         description: "A social news aggregating, web content rating, and discussion site. Somehow there's a subreddit for absolutely anything you can possibly think of.",
-    },
-
+    }
 ]
+
+mongoose.connection.on("open", () => {
+    Bookmark.deleteMany({}, (err, data) => {
+        Bookmark.create(startBookmarks, (err, data) => {
+            console.log("==========BOOKMARKS ADDED==========")
+            console.log(data)
+            console.log("==========BOOKMARKS ADDED==========")
+        })
+    })
+})
