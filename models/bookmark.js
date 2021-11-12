@@ -10,6 +10,7 @@ const {Schema, model} = mongoose
 const bookmarkSchema = new mongoose.Schema({
     name: String,
     url: String,
+    slogan: String,
     description: String,
 })
 
