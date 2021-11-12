@@ -7,7 +7,7 @@ const {Schema, model} = mongoose
 ////////////////////////////////////////////////
 // Model
 ////////////////////////////////////////////////
-const bookmarkSchema = new mongoose.Schema({
+const bookmarkSchema = new Schema({
     name: String,
     url: String,
     slogan: String,
@@ -17,6 +17,6 @@ const bookmarkSchema = new mongoose.Schema({
 const Bookmark = model("Bookmark", bookmarkSchema)
 
 ////////////////////////////////////////////////
-// Exports
+// Export
 ////////////////////////////////////////////////
 module.exports = Bookmark
