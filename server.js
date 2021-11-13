@@ -5,12 +5,14 @@ require("dotenv").config()
 const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
+const session = require("express-session")
+const MongoStore = require("connect-mongo")
 
 const Bookmark = require("./models/bookmark")
 const BookmarkRouter = require("./controllers/bookmarks")
-const MongoStore = require("connect-mongo")
+const UserRouter = require("./controllers/user")
 
-const {PORT, SECRET} = process.env;
+const {PORT, DB_URL, SECRET} = process.env;
 const app = express()
 
 ////////////////////////////////////////////////
@@ -20,6 +22,7 @@ app.use(cors())
 app.use(morgan("dev"))
 app.use(express.json())
 app.use("/bookmarks", BookmarkRouter)
+app.use("/user", UserRouter)
 // Setting up auth
 app.use(session({
     secret: SECRET,

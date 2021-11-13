@@ -12,6 +12,14 @@ const router = express.Router()
 ////////////////////////////////////////////////
 
 // Signup
+router.get("/", async (req,res) => {
+    try {
+        res.json(await User.find({}))
+    } catch (err) {
+        res.status(400).json(err)
+    }
+})
+
 router.post("/signup", async (req,res) => {
     req.body.password = await bcrypt.hash(
         req.body.password,
@@ -36,8 +44,20 @@ router.post("/login", (req,res) => {
                 req.session.loggedIn = truereq.session.username = username
                 res.redirect("/bookmarks")
             } else {
-                
+
             }
         }
     })
 })
+
+// Logout
+router.get("/logout", (req,res) => {
+    req.session.destroy((err) => {
+        res.redirect("/")
+    })
+})
+
+////////////////////////////////////////////////
+// Export
+////////////////////////////////////////////////
+module.exports = router
