@@ -5,7 +5,9 @@ require("dotenv").config()
 const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
+
 const Bookmark = require("./models/bookmark")
+const BookmarkRouter = require("./controllers/bookmarks")
 
 const {PORT} = process.env;
 const app = express()
