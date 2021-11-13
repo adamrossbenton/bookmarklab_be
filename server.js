@@ -20,7 +20,7 @@ app.use(cors())
 app.use(morgan("dev"))
 app.use(express.json())
 app.use("/bookmarks", BookmarkRouter)
-// For if we want user auth later
+// Setting up auth
 // app.use(session({
 //     secret: SECRET,
 //     store: MongoStore.create({mongoUrl: DB_URL}),
