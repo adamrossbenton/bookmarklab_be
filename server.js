@@ -21,12 +21,12 @@ app.use(morgan("dev"))
 app.use(express.json())
 app.use("/bookmarks", BookmarkRouter)
 // Setting up auth
-// app.use(session({
-//     secret: SECRET,
-//     store: MongoStore.create({mongoUrl: DB_URL}),
-//     saveUnitialized: true,
-//     resave: false
-// }))
+app.use(session({
+    secret: SECRET,
+    store: MongoStore.create({mongoUrl: DB_URL}),
+    saveUnitialized: true,
+    resave: false
+}))
 
 ////////////////////////////////////////////////
 // Routes
